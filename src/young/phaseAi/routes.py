@@ -1,24 +1,18 @@
 from flask import Blueprint, request, jsonify
 import requests
 
-# ==============================
-# Blueprint 생성
-# ==============================
 bp = Blueprint(
     "young_phase",
     __name__,
     url_prefix="/phase"
 )
-
 # ==============================
 # Ollama 설정
 # ==============================
 MODEL_NAME = "gemma3:4b"
 OLLAMA_URL = "http://localhost:11434/api/chat"
-
 # ==============================
-# 폭포수 모델 단계별 기본 가이드
-# (TF-IDF CSV 대신 기초 지식 베이스 역할)
+# 폭포수 단계 기본 가이드
 # ==============================
 WATERFALL_PHASE_GUIDE = {
     "요구사항분석": (
@@ -42,39 +36,16 @@ WATERFALL_PHASE_GUIDE = {
         "환경 변화에 대응하여 시스템을 지속적으로 관리한다."
     )
 }
-
 # ==============================
-# Ollama 호출 함수
+# Ollama 호출 공통 함수
 # ==============================
-def ask_phase_ai(phase_name: str, methodology: str) -> str:
-    base_guide = WATERFALL_PHASE_GUIDE.get(phase_name)
-
-    if not base_guide:
-        return "해당 단계에 대한 기본 설명이 정의되어 있지 않습니다."
-
-    system_message = {
-        "role": "system",
-        "content": (
-            f"너는 IT 회사에서 사용하는 {methodology} 모델 기반 "
-            "소프트웨어 프로젝트 관리 도우미다."
-        )
-    }
-
-    user_message = {
-        "role": "user",
-        "content": (
-            f"{methodology} 모델의 '{phase_name}' 단계에 대해 "
-            "실제 프로젝트에서 바로 사용할 수 있는 단계 설명을 작성해라.\n\n"
-            f"기초 조건:\n{base_guide}\n\n"
-            "- 실무 문서에 바로 붙여 넣을 수 있게 작성\n"
-            "- 교과서 말투는 피할 것\n"
-            "- 3~5문장 분량"
-        )
-    }
-
+def call_ollama(system_prompt: str, user_prompt: str) -> str:
     payload = {
         "model": MODEL_NAME,
-        "messages": [system_message, user_message],
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
         "stream": False
     }
 
@@ -85,20 +56,63 @@ def ask_phase_ai(phase_name: str, methodology: str) -> str:
     return data.get("message", {}).get("content", "").strip()
 
 # ==============================
-#  AI 단계 설명 생성 API
+# AI 단계 설명 / 목표 생성
 # ==============================
 @bp.route("/ai-description", methods=["POST"])
-def generate_phase_description():
+def generate_phase_ai():
     data = request.get_json(silent=True) or {}
 
     phase_name = data.get("phaseName")
     methodology = data.get("methodology", "폭포수")
+    project_name = data.get("projectName", "")
+    req_type = data.get("type", "description")  # description | goal
 
     if not phase_name:
         return jsonify({"error": "phaseName이 필요합니다."}), 400
 
+    base_guide = WATERFALL_PHASE_GUIDE.get(phase_name, "")
+
     try:
-        description = ask_phase_ai(phase_name, methodology)
-        return jsonify({"description": description})
+        # ==========================
+        # 단계 설명 (기법 중심)
+        # ==========================
+        if req_type == "description":
+            system_prompt = (
+                f"너는 {methodology} 개발 방법론에 정통한 "
+                "소프트웨어 프로젝트 관리 전문가다."
+            )
+
+            user_prompt = (
+                f"{methodology} 모델의 '{phase_name}' 단계에 대해 설명하라.\n\n"
+                f"기초 참고 내용:\n{base_guide}\n\n"
+                "- 실무 문서에 바로 붙여 넣을 수 있도록 작성\n"
+                "- 교과서식 설명은 피할 것\n"
+                "- 단계의 목적과 핵심 활동 위주\n"
+                "- 3~5문장 분량"
+            )
+
+        # ==========================
+        # 단계 목표 (프로젝트 중심)
+        # ==========================
+        elif req_type == "goal":
+            system_prompt = (
+                "너는 IT 회사의 숙련된 PM(Project Manager)이다."
+            )
+
+            user_prompt = (
+                f"'{project_name}' 프로젝트에서 "
+                f"'{phase_name}' 단계의 목표를 작성하라.\n\n"
+                "- PM이 팀원에게 공유하는 문체\n"
+                "- 실제 업무 지시처럼 구체적으로 작성\n"
+                "- 산출물, 인터뷰, 검토 대상 등을 포함\n"
+                "- 3~5문장 분량"
+            )
+
+        else:
+            return jsonify({"error": "type 값이 올바르지 않습니다."}), 400
+
+        result = call_ollama(system_prompt, user_prompt)
+        return jsonify({"description": result})
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
