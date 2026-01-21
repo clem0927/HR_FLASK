@@ -1,17 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+g<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="34e01ecd-67ea-4aa9-be52-8f2af78ebb7f" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HR_Flask.iml" beforeDir="false" afterPath="$PROJECT_DIR$/HR_Flask.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/young/regression/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/young/regression/routes.py" afterDir="false" />
-    </list>
+    <list default="true" id="34e01ecd-67ea-4aa9-be52-8f2af78ebb7f" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -125,7 +118,7 @@
       <workItem from="1768894118870" duration="979000" />
       <workItem from="1768895109196" duration="5095000" />
       <workItem from="1768984365355" duration="2528000" />
-      <workItem from="1768989054307" duration="1442000" />
+      <workItem from="1768989054307" duration="1779000" />
     </task>
     <servers />
   </component>
