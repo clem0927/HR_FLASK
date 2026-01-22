@@ -8,3 +8,7 @@ dependencies:
   - pip:
       - flask
       - flask-cors
+      - scikit-learn
+      - kiwipiepy
+      - torch
+      - sentence-transformers
