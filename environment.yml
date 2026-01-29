@@ -1,4 +1,4 @@
-name: hr
+name: eun
 channels:
   - defaults
 dependencies:
@@ -8,3 +8,9 @@ dependencies:
   - pip:
       - flask
       - flask-cors
+      - requests
+      - pandas
+      - scikit-learn
+      - joblib
+      - requests
+      - pandas-stubs
