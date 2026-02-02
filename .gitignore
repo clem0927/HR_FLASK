@@ -1,2 +1,7 @@
 .idea.*
 HR_Flask.iml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
