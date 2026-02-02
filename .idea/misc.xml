@@ -3,7 +3,7 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.10 (HR_Flask)" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_24" project-jdk-name="Python 3.10 (HR_Flask)" project-jdk-type="Python SDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_24" project-jdk-name="HR_FLASK" project-jdk-type="Python SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
