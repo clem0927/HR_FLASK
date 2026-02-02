@@ -20,3 +20,7 @@ dependencies:
 #pip install sentence-transformers
 #pip install --upgrade torch torchvision torchaudio //이건 별도로 한명령어
 #pip install --upgrade sentence-transformers transformers //이것도
+      - scikit-learn
+      - kiwipiepy
+      - torch
+      - sentence-transformers
