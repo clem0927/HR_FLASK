@@ -9,6 +9,11 @@ dependencies:
       - flask
       - flask-cors
       - requests
+      - pandas
+      - scikit-learn
+      - joblib
+      - requests
+      - pandas-stubs
 #sklearn
 #oracledb
 #conda install pytorch cpuonly -c pytorch
