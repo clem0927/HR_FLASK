@@ -3,7 +3,7 @@ import oracledb
 # oracledb.init_oracle_client()
 
 DB_CONFIG = {
-    "user": "young",
+    "user": "hh",
     "password": "1234",
     "dsn": "localhost:1521/FREEPDB1"
 }

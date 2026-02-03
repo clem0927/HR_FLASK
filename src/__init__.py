@@ -8,7 +8,6 @@ def create_app():
     CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
 
     from src.young.chatbot.routes import bp as chatbot_bp
-    from src.young.regression.routes import bp as regression_bp
     from src.eun.attendance.routes import bp as attendance_bp
     from src.hyun.search.routes import bp as search_bp
     from src.young.phaseAi.routes import bp as phaseAi_bp
@@ -17,7 +16,6 @@ def create_app():
     from src.gyu.routes import bp as gyu_reward_bp
 
     app.register_blueprint(chatbot_bp)
-    app.register_blueprint(regression_bp)
     app.register_blueprint(gyu_reward_bp)
     app.register_blueprint(attendance_bp)
     app.register_blueprint(search_bp)
